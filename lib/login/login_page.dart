@@ -70,7 +70,7 @@ class _LoginPageState extends State<LoginPage> {
                             child: ButtonWidget(
                               text: 'Entrar',
                               onPressed: () {
-                                Navigator.push(
+                                Navigator.pushReplacement(
                                   context,
                                   MaterialPageRoute(
                                       builder: (context) => const HomePage()),

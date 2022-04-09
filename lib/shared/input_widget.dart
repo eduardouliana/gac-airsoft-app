@@ -20,6 +20,12 @@ class InputWidget extends StatelessWidget {
   })  : keyboartType = TextInputType.text,
         obscuredText = false;
 
+  InputWidget.Number({
+    required this.text,
+    required this.controller,
+  })  : keyboartType = TextInputType.number,
+        obscuredText = false;
+
   InputWidget.Password({
     required this.text,
     required this.controller,

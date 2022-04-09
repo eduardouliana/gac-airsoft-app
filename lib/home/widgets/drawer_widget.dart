@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:gac/home/pages/sort_games/config_sort_games_page.dart';
+import 'package:gac/home/pages/sort_games/sort_games_page.dart';
 import 'package:gac/shared/logo_widget.dart';
 
 class DrawerWidget extends StatelessWidget {
@@ -6,12 +8,12 @@ class DrawerWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    /*void _sortGames() {
+    void _sortGames() {
       Navigator.push(
         context,
-        MaterialPageRoute(builder: (context) => SortGamesPage()),
+        MaterialPageRoute(builder: (context) => ConfigSortGamesPage()),
       );
-    }*/
+    }
 
     return Drawer(
       child: ListView(
@@ -22,8 +24,8 @@ class DrawerWidget extends StatelessWidget {
           ),
           ListTile(
             leading: Icon(Icons.wifi_protected_setup_sharp),
-            title: Text('Ooção 1'),
-            //onTap: _sortGames,
+            title: Text('Sorteio'),
+            onTap: _sortGames,
           ),
           const ListTile(
             leading: Icon(Icons.people),

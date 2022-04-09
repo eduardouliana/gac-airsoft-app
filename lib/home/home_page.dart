@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gac/home/pages/games/games_page.dart';
 import 'package:gac/home/pages/members/members_page.dart';
-import 'package:gac/home/pages/sort_games/sort_games_page.dart';
+import 'package:gac/home/pages/sort_games/config_sort_games_page.dart';
 import 'package:gac/home/widgets/drawer_widget.dart';
 
 class HomePage extends StatefulWidget {
@@ -16,36 +16,30 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return DefaultTabController(
       initialIndex: 0,
-      length: 4,
+      length: 3,
       child: Scaffold(
         drawer: const DrawerWidget(),
         appBar: AppBar(
-          title: const Center(child: Text('GAC - Airsoft')),
+          title: const Text('GAC - Grupo de Airsoft Cedrense'),
           bottom: const TabBar(
             tabs: <Widget>[
+              Tab(
+                child: Text('Perfil'),
+              ),
               Tab(
                 child: Text('Jogos'),
               ),
               Tab(
-                child: Text('Membros'),
-              ),
-              Tab(
-                child: Text('Sorteio'),
-              ),
-              Tab(
-                child: Text('Votações'),
+                child: Text('Operadores'),
               ),
             ],
           ),
         ),
         body: const TabBarView(
           children: <Widget>[
+            Center(child: Text("Meu perfil")),
             GamesPage(),
             MembersPage(),
-            SortGamesPage(),
-            Center(
-              child: Text("Votação das paradas"),
-            ),
           ],
         ),
       ),

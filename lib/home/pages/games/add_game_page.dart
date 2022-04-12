@@ -63,7 +63,7 @@ class _AddGamePageState extends State<AddGamePage> {
               text: 'Nome:',
               controller: nomeController,
             ),
-            InputWidget.Text(
+            InputWidget.MultiLineText(
               text: 'Descrição:',
               controller: descricaoController,
             ),
@@ -71,7 +71,7 @@ class _AddGamePageState extends State<AddGamePage> {
               text: 'Local:',
               controller: localController,
             ),
-            InputWidget.Password(
+            InputWidget.Date(
               text: 'Data:',
               controller: dataController,
             ),

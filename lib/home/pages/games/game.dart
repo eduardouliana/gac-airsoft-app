@@ -22,7 +22,6 @@ class Game {
       descricao: json['descricao'],
       local: json['local'],
       data: json['data'],
-      // Demais campos
     );
   }
 
@@ -33,7 +32,6 @@ class Game {
       'descricao': descricao,
       'local': local,
       'data': data,
-      // Demais campos
     };
   }
 }

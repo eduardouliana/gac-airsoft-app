@@ -32,17 +32,17 @@ class _GamesPageState extends State<GamesPage> {
                     child: Container(
                       color: Colors.grey,
                       child: ListTile(
-                        trailing: Icon(
+                        trailing: const Icon(
                           Icons.edit,
                           color: Colors.black,
                         ),
                         title: Text(
                           game.nome,
-                          style: TextStyle(color: Colors.black),
+                          style: const TextStyle(color: Colors.black),
                         ),
                         subtitle: Text(
-                          'Local: ' + game.local,
-                          style: TextStyle(color: Colors.black),
+                          'Local: ' + game.local + ' -- Data: ' + game.data,
+                          style: const TextStyle(color: Colors.black),
                         ),
                         // leading: Container(
                         //   height: 75,

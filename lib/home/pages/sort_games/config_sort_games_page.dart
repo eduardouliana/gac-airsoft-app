@@ -44,13 +44,10 @@ class _ConfigSortGamesPageState extends State<ConfigSortGamesPage> {
                 text: 'Número de operadores',
                 controller: numeroOpController,
               ),
-              InputWidget.Number(
-                text: 'Número de times',
-                controller: numeroTimesController,
-              ),
-              const SizedBox(
-                height: 100,
-              ),
+              // InputWidget.Number(
+              //   text: 'Número de times',
+              //   controller: numeroTimesController,
+              // ),
               ButtonWidget(
                 //botao
                 text: 'Iniciar Sorteio',

@@ -5,8 +5,10 @@ class InputWidget extends StatelessWidget {
   final TextInputType keyboartType;
   final TextEditingController controller;
   final bool obscuredText;
+  int minLines = 1;
+  int maxLines = 1;
 
-  const InputWidget({
+  InputWidget({
     Key? key,
     required this.text,
     required this.keyboartType,
@@ -20,10 +22,24 @@ class InputWidget extends StatelessWidget {
   })  : keyboartType = TextInputType.text,
         obscuredText = false;
 
+  InputWidget.MultiLineText({
+    required this.text,
+    required this.controller,
+  })  : keyboartType = TextInputType.text,
+        obscuredText = false,
+        minLines = 3,
+        maxLines = 10;
+
   InputWidget.Number({
     required this.text,
     required this.controller,
   })  : keyboartType = TextInputType.number,
+        obscuredText = false;
+
+  InputWidget.Date({
+    required this.text,
+    required this.controller,
+  })  : keyboartType = TextInputType.datetime,
         obscuredText = false;
 
   InputWidget.Password({
@@ -38,6 +54,8 @@ class InputWidget extends StatelessWidget {
       keyboardType: keyboartType,
       obscureText: obscuredText,
       controller: controller,
+      minLines: minLines,
+      maxLines: maxLines,
       decoration: InputDecoration(labelText: text),
     );
   }

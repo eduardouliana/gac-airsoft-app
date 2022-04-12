@@ -1,11 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:gac/home/pages/games/games_page.dart';
+import 'package:gac/home/pages/members/member.dart';
 import 'package:gac/home/pages/members/members_page.dart';
 import 'package:gac/home/pages/sort_games/config_sort_games_page.dart';
 import 'package:gac/home/widgets/drawer_widget.dart';
 
 class HomePage extends StatefulWidget {
-  const HomePage({Key? key}) : super(key: key);
+  Member? memberParam;
+
+  HomePage({
+    this.memberParam,
+    Key? key,
+  }) : super(key: key);
 
   @override
   _HomePageState createState() => _HomePageState();

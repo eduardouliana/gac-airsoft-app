@@ -1,4 +1,6 @@
+import 'package:gac/database/member_db.dart';
 import 'package:gac/home/home_page.dart';
+import 'package:gac/home/pages/members/member.dart';
 import 'package:gac/login/widgets/background_widget.dart';
 import 'package:gac/shared/button_widget.dart';
 import 'package:gac/shared/input_widget.dart';
@@ -69,13 +71,7 @@ class _LoginPageState extends State<LoginPage> {
                             onPressed: null,
                             child: ButtonWidget(
                               text: 'Entrar',
-                              onPressed: () {
-                                Navigator.pushReplacement(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => const HomePage()),
-                                );
-                              },
+                              onPressed: () => onPressLogin(context),
                             ),
                           )
                         ],
@@ -90,4 +86,47 @@ class _LoginPageState extends State<LoginPage> {
       ),
     );
   }
+
+  void onPressLogin(BuildContext ctx) async {
+    String login = _nickController.text;
+    String pwd = _passwordController.text;
+
+    MemberDB memberDB = MemberDB();
+
+    try {
+      Member member = await memberDB.authenticate(login, pwd);
+
+      Navigator.pushReplacement(
+        ctx,
+        MaterialPageRoute(builder: (ctx) => HomePage(memberParam: member)),
+      );
+    } catch (_) {
+      showAlertDialog1(ctx);
+    }
+  }
+}
+
+showAlertDialog1(BuildContext context) {
+  // configura o button
+  Widget okButton = FlatButton(
+    child: Text("OK"),
+    onPressed: () {
+      Navigator.pop(context);
+    },
+  );
+  // configura o  AlertDialog
+  AlertDialog alerta = AlertDialog(
+    title: Text("Dados incorretos"),
+    content: Text("Usuario ou senha inválida"),
+    actions: [
+      okButton,
+    ],
+  );
+  // exibe o dialog
+  showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      return alerta;
+    },
+  );
 }

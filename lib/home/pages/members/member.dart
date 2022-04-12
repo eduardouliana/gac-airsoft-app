@@ -16,8 +16,6 @@ class Member {
   });
 
   factory Member.fromJson(Map<String, dynamic> json) {
-    print(json);
-
     return Member(
       id: json['id'],
       nome: json['nome'],

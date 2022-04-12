@@ -16,8 +16,6 @@ class Game {
   });
 
   factory Game.fromJson(Map<String, dynamic> json) {
-    print(json);
-
     return Game(
       id: json['id'],
       nome: json['nome'],

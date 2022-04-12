@@ -1,5 +1,5 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:gac/database/game_db.dart';
 import 'package:gac/home/pages/games/game.dart';
 import 'package:gac/shared/button_widget.dart';
 import 'package:gac/shared/input_widget.dart';
@@ -17,7 +17,7 @@ class AddGamePage extends StatefulWidget {
 }
 
 class _AddGamePageState extends State<AddGamePage> {
-  FirebaseFirestore db = FirebaseFirestore.instance;
+  GameDB gameDB = GameDB();
 
   late TextEditingController nomeController;
   late TextEditingController descricaoController;
@@ -75,14 +75,22 @@ class _AddGamePageState extends State<AddGamePage> {
               text: 'Data:',
               controller: dataController,
             ),
-            ButtonWidget(text: 'Cadastrar', onPressed: onPress),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                ButtonWidget(text: 'Salvar', onPressed: onPressAdd),
+                (widget.gameParam != null)
+                    ? ButtonWidget(text: 'Excluir', onPressed: onPressDelete)
+                    : Container(),
+              ],
+            ),
           ]),
         ),
       ),
     );
   }
 
-  void onPress() {
+  void onPressAdd() {
     String id = const Uuid().v1();
 
     if (widget.gameParam != null) {
@@ -97,7 +105,7 @@ class _AddGamePageState extends State<AddGamePage> {
       data: dataController.text,
     );
 
-    db.collection("jogos").doc(id).set(game.toMap());
+    gameDB.saveGame(game);
 
     ScaffoldMessenger.of(context).showSnackBar(
       const SnackBar(
@@ -105,6 +113,17 @@ class _AddGamePageState extends State<AddGamePage> {
       ),
     );
 
+    Navigator.of(context).pop();
+  }
+
+  void onPressDelete() {
+    gameDB.deleteGame(widget.gameParam!.id);
+
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(
+        content: Text("Excluído com sucesso"),
+      ),
+    );
     Navigator.of(context).pop();
   }
 }

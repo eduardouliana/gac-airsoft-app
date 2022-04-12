@@ -15,7 +15,7 @@ class Member {
     required this.senha,
   });
 
-  factory Member.fromJson(Map<String, dynamic> json) {
+  factory Member.fromJson(Map<String, dynamic?> json) {
     return Member(
       id: json['id'],
       nome: json['nome'],

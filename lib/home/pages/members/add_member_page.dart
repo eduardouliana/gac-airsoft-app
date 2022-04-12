@@ -1,5 +1,5 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:gac/database/member_db.dart';
 import 'package:gac/home/pages/members/member.dart';
 import 'package:gac/shared/button_widget.dart';
 import 'package:gac/shared/input_widget.dart';
@@ -17,7 +17,7 @@ class AddMemberPage extends StatefulWidget {
 }
 
 class _AddMemberPageState extends State<AddMemberPage> {
-  FirebaseFirestore db = FirebaseFirestore.instance;
+  MemberDB memberDB = MemberDB();
 
   late TextEditingController nomeController;
   late TextEditingController apelidoController;
@@ -75,14 +75,22 @@ class _AddMemberPageState extends State<AddMemberPage> {
               text: 'Senha:',
               controller: senhaController,
             ),
-            ButtonWidget(text: 'Cadastrar', onPressed: onPress),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                ButtonWidget(text: 'Salvar', onPressed: onPressAdd),
+                (widget.memberParam != null)
+                    ? ButtonWidget(text: 'Excluir', onPressed: onPressDelete)
+                    : Container(),
+              ],
+            ),
           ]),
         ),
       ),
     );
   }
 
-  void onPress() {
+  void onPressAdd() {
     String id = const Uuid().v1();
 
     if (widget.memberParam != null) {
@@ -97,7 +105,7 @@ class _AddMemberPageState extends State<AddMemberPage> {
       senha: senhaController.text,
     );
 
-    db.collection("operadores").doc(id).set(member.toMap());
+    memberDB.saveMember(member);
 
     ScaffoldMessenger.of(context).showSnackBar(
       const SnackBar(
@@ -105,6 +113,17 @@ class _AddMemberPageState extends State<AddMemberPage> {
       ),
     );
 
+    Navigator.of(context).pop();
+  }
+
+  void onPressDelete() {
+    memberDB.deleteMember(widget.memberParam!.id);
+
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(
+        content: Text("Excluído com sucesso"),
+      ),
+    );
     Navigator.of(context).pop();
   }
 }

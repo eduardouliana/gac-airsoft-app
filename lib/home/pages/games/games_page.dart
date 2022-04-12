@@ -1,5 +1,5 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:gac/database/game_db.dart';
 import 'package:gac/home/pages/games/add_game_page.dart';
 import 'package:gac/home/pages/games/game.dart';
 
@@ -11,9 +11,9 @@ class GamesPage extends StatefulWidget {
 }
 
 class _GamesPageState extends State<GamesPage> {
-  FirebaseFirestore db = FirebaseFirestore.instance;
+  GameDB gameDB = GameDB();
 
-  Stream<List<Game>> get members => getGames();
+  Stream<List<Game>> get members => gameDB.getGames();
 
   @override
   Widget build(BuildContext context) {
@@ -82,15 +82,5 @@ class _GamesPageState extends State<GamesPage> {
         },
       ),
     );
-  }
-
-  Stream<List<Game>> getGames() {
-    return db.collection("jogos").snapshots().map((snapshot) => snapshot.docs
-        .map(
-          (doc) => Game.fromJson(
-            doc.data(),
-          ),
-        )
-        .toList());
   }
 }

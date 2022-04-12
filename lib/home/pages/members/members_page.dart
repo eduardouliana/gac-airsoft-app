@@ -1,5 +1,5 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:gac/database/member_db.dart';
 import 'package:gac/home/pages/members/add_member_page.dart';
 import 'package:gac/home/pages/members/member.dart';
 import 'package:gac/shared/logo_widget.dart';
@@ -12,9 +12,9 @@ class MembersPage extends StatefulWidget {
 }
 
 class _MembersPageState extends State<MembersPage> {
-  FirebaseFirestore db = FirebaseFirestore.instance;
+  MemberDB memberDB = MemberDB();
 
-  Stream<List<Member>> get members => getMembers();
+  Stream<List<Member>> get members => memberDB.getMembers();
 
   @override
   Widget build(BuildContext context) {
@@ -29,7 +29,7 @@ class _MembersPageState extends State<MembersPage> {
               return Column(
                 children: [
                   Padding(
-                    padding: const EdgeInsets.all(8.0),
+                    padding: const EdgeInsets.fromLTRB(5, 5, 5, 0),
                     child: Container(
                       color: Colors.grey,
                       child: ListTile(
@@ -83,18 +83,5 @@ class _MembersPageState extends State<MembersPage> {
         },
       ),
     );
-  }
-
-  Stream<List<Member>> getMembers() {
-    return db
-        .collection("operadores")
-        .snapshots()
-        .map((snapshot) => snapshot.docs
-            .map(
-              (doc) => Member.fromJson(
-                doc.data(),
-              ),
-            )
-            .toList());
   }
 }

@@ -1,8 +1,8 @@
 import 'dart:async';
 
 import 'package:gac/login/login_page.dart';
-import 'package:gac/splash/widgets/background_widget.dart';
-import 'package:gac/splash/widgets/loading_widget.dart';
+import 'package:gac/splash/widgets/background_splash_widget.dart';
+import 'package:gac/shared/gac_widget.dart';
 import 'package:flutter/material.dart';
 
 class SplashPage extends StatefulWidget {
@@ -33,20 +33,9 @@ class _SplashPageState extends State<SplashPage> {
     return Scaffold(
       body: Stack(
         children: [
-          const BackgroundWidget(),
-          Column(
-            children: [
-              const SizedBox(height: 250),
-              const Center(
-                child: LoadingWidget(),
-              ),
-              CircularProgressIndicator(
-                valueColor: AlwaysStoppedAnimation(
-                  Colors.lightGreen.shade900,
-                ),
-                strokeWidth: 9,
-              )
-            ],
+          const BackgroundSplashWidget(),
+          const Center(
+            child: GacWidget(),
           ),
         ],
       ),

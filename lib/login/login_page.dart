@@ -1,10 +1,14 @@
+import 'package:gac/core/app_colors.dart';
+import 'package:gac/core/app_text_styles.dart';
 import 'package:gac/database/member_db.dart';
 import 'package:gac/home/home_page.dart';
 import 'package:gac/home/pages/members/member.dart';
-import 'package:gac/login/widgets/background_widget.dart';
-import 'package:gac/shared/button_widget.dart';
-import 'package:gac/shared/input_widget.dart';
-import 'package:gac/shared/logo_widget.dart';
+import 'package:gac/login/widgets/background_login_widget.dart';
+import 'package:gac/login/widgets/forgot_password_widget.dart';
+import 'package:gac/login/widgets/password_widget.dart';
+import 'package:gac/login/widgets/sigin_widget.dart';
+import 'package:gac/login/widgets/user_widget.dart';
+import 'package:gac/shared/gac_widget.dart';
 import 'package:flutter/material.dart';
 
 class LoginPage extends StatefulWidget {
@@ -15,20 +19,20 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-  late TextEditingController _nickController;
+  late TextEditingController _userController;
   late TextEditingController _passwordController;
 
   @override
   void initState() {
     super.initState();
 
-    _nickController = TextEditingController();
+    _userController = TextEditingController();
     _passwordController = TextEditingController();
   }
 
   @override
   void dispose() {
-    _nickController.dispose();
+    _userController.dispose();
     _passwordController.dispose();
     super.dispose();
   }
@@ -41,39 +45,30 @@ class _LoginPageState extends State<LoginPage> {
         body: Center(
           child: Stack(
             children: [
-              const BackgroundWidget(),
-              const LogoWidget(),
+              const BackgroundLoginWidget(),
               SingleChildScrollView(
                 child: Column(
                   children: [
+                    const SizedBox(height: 200),
+                    const Center(child: GacWidget()),
                     Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 10),
+                      padding: const EdgeInsets.symmetric(horizontal: 27),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.center,
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          const SizedBox(height: 350),
-                          InputWidget.Text(
-                            text: 'Apelido',
-                            controller: _nickController,
-                          ),
-                          const SizedBox(height: 10),
-                          InputWidget.Password(
-                            text: 'Senha',
-                            controller: _passwordController,
-                          ),
+                          const SizedBox(height: 50),
+                          UserWidget(controller: _userController),
+                          const SizedBox(height: 22),
+                          PasswordWidget(controller: _passwordController),
                           const SizedBox(height: 20),
-                          TextButton(
-                            style: TextButton.styleFrom(
-                              primary: Colors.blue,
-                              onSurface: Colors.red,
-                            ),
-                            onPressed: null,
-                            child: ButtonWidget(
-                              text: 'Entrar',
-                              onPressed: () => onPressLogin(context),
-                            ),
-                          )
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              const ForgotPasswordWidget(),
+                              SigInWidget(onPressed: onPressLogin),
+                            ],
+                          ),
                         ],
                       ),
                     ),
@@ -87,8 +82,8 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 
-  void onPressLogin(BuildContext ctx) async {
-    String login = _nickController.text;
+  void onPressLogin() async {
+    String login = _userController.text;
     String pwd = _passwordController.text;
 
     MemberDB memberDB = MemberDB();
@@ -97,36 +92,35 @@ class _LoginPageState extends State<LoginPage> {
       Member member = await memberDB.authenticate(login, pwd);
 
       Navigator.pushReplacement(
-        ctx,
+        context,
         MaterialPageRoute(builder: (ctx) => HomePage(memberParam: member)),
       );
     } catch (_) {
-      showAlertDialog1(ctx);
+      showAlertDialog(context);
     }
   }
 }
 
-showAlertDialog1(BuildContext context) {
-  // configura o button
-  Widget okButton = FlatButton(
-    child: Text("OK"),
+showAlertDialog(BuildContext context) {
+  Widget okButton = TextButton(
+    child: const Text("OK"),
     onPressed: () {
       Navigator.pop(context);
     },
   );
-  // configura o  AlertDialog
-  AlertDialog alerta = AlertDialog(
-    title: Text("Dados incorretos"),
-    content: Text("Usuario ou senha inválida"),
+
+  AlertDialog alert = AlertDialog(
+    title: const Text("Dados incorretos"),
+    content: const Text("Usuário ou senha inválidos"),
     actions: [
       okButton,
     ],
   );
-  // exibe o dialog
+
   showDialog(
     context: context,
     builder: (BuildContext context) {
-      return alerta;
+      return alert;
     },
   );
 }
